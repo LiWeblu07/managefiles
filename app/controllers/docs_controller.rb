@@ -1,73 +1,47 @@
 class DocsController < ApplicationController
 
- before_action :find_doc, only: [:show, :edit, :update, :destroy]  
+  before_action :find_doc, only: [:show, :edit, :update, :destroy]  
 
- def index
+  def index
+    @docs = Doc.all
+  end  
 
-   @docs = Doc.all
+  def show
+  end  
 
- end  
+  def new
+    @doc = Doc.new
+  end
 
- def show
+  def create
+    @doc = Doc.new(doc_params)
+    if @doc.save
+      redirect_to @doc
+    else
+      render 'new'
+    end
+  end   
 
- end  
+  def update
+    if @doc.update(doc_params)
+      redirect_to @doc
+    else
+      render 'edit'
+    end
+  end    
 
- def new
+  def destroy
+    @doc.destroy
+    redirect_to docs_path
+  end   
 
-   @doc = Doc.new
+  private  
 
- end  
+  def find_doc
+    @doc = Doc.find(params[:id])
+  end  
 
- def update
-
-   if @doc.update(doc_params)
-
-     redirect_to @doc
-
-   else
-
-     render 'edit'
-
-   end
-
- end    
-
- def destroy
-
-     @doc.destroy
-
-     redirect_to docs_path
-
-   end  
-
-   def create
-
-   @doc = Doc.new(doc_params)
-
-   if @doc.save
-
-     redirect_to @doc
-
-   else
-
-     render 'new'
-
-   end
-
- end  
-
- private  
-
- def find_doc
-
-   @doc = Doc.find(params[:id])
-
- end  
-
- def doc_params
-
-   params.require(:doc).permit(:title, :content)
-
- end
-
+  def doc_params
+    params.require(:doc).permit(:title, :content)
+  end
 end
