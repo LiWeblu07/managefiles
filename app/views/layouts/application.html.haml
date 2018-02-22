@@ -1,0 +1,14 @@
+%html
+%head
+  %title ManageFile | Your life's work!
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+%body
+  %header
+    .header_inner
+      = link_to " ManageFile ", root_path, id: "logo"
+  %p.notice= notice
+  %p.alert= alert
+
+  = yield
